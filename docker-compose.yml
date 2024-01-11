@@ -1,0 +1,45 @@
+version: '3'
+
+
+
+
+
+services:
+  anti-cafe:
+    build: .
+    environment:
+      DB_U: ${PG_USER}
+      DB_P: ${PG_PASSWORD}
+      DB_B: ${PG_BD}
+    networks:
+     - anti-cafe_net
+    ports:
+      - 8080:8080
+    depends_on:
+      database:
+        condition: service_healthy
+
+  database:
+    image: postgres:14
+    environment:
+      POSTGRES_DB: ${PG_BD}
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+    networks:
+      - anti-cafe_net
+    volumes:
+      - anti-cafe_bd:/var/lib/postgresql/data
+    restart: always
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready", "-U", $PG_USER ]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  anti-cafe_bd:
+    name: anti-cafe_bd
+
+networks:
+  anti-cafe_net:
+    name: anti-cafe_net

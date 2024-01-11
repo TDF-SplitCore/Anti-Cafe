@@ -1,0 +1,23 @@
+spring:
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    hibernate:
+      ddl-auto: create-drop
+  datasource:
+    url: jdbc:postgresql://database:5432/${DB_B}
+    username: ${DB_U}
+    password: ${DB_P}
+reserve:
+  service:
+    daysToReserve: 7
+    openingHour: 9
+    closingHour: 24
+scheduler:
+  order:
+    lifetime:
+      tagged-deletion: 2
+page:
+  page: 10

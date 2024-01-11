@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>Резервирование</title>
+</head>
+<body>
+<form th:method="GET" th:action="@{/order/{id}(id=${sendDTO.orderId()})}"><button type="submit">Назад</button> </form>
+<form th:method="GET" th:action="@{/order/{id}/reserve(id=${sendDTO.orderId()})}">
+    <label>
+        <select th:name="day" th:onchange="">
+            <option th:each="days:${sendDTO.dayOfReserve()}" th:value="${days}" th:text="${days}"></option>
+        </select>
+        <select th:name="gameZoneId" th:onchange="">
+            <option th:each="gameZone:${sendDTO.gameZones()}" th:value="${gameZone.id()}"
+                    th:text="${gameZone.id()}+':'+${gameZone.name()}"></option>
+        </select>
+    </label>
+    <input type="submit" value="Найти"/>
+</form>
+
+<table th:if="${sendDTO.freeTimes().isPresent()}">
+    <tr>
+        <th>Свободное<br/>время</th>
+        <th>Макс<br/>длительность<br/>резерва</th>
+        <th>Введите резервируемое время</th>
+    </tr>
+    <tr th:each="freeTime:${sendDTO.freeTimes().get()}">
+        <td>
+            <a th:text="${freeTime[0]} + ':00'"></a>
+        </td>
+        <td>
+            <a th:text="${freeTime[1]} + 'ч.'"></a>
+        </td>
+        <td>
+            <a th:if="${sendDTO.hourError().isPresent()&&sendDTO.hourError().get.equals(freeTime[0])}"
+               style="color:#FF0000" th:text="${sendDTO.hourMessageError()}"></a>
+            <form th:method="POST" th:action="@{/order/reserve/Add}">
+                <label th:for="hour"></label>
+                <input th:type="hidden" th:value="${sendDTO.day()}" th:name="day">
+                <input th:type="hidden" th:value="${sendDTO.gameZoneId()}" th:name="gameZoneId">
+                <input th:type="hidden" th:value="${freeTime[0]}" th:name="freeTime">
+                <input th:type="hidden" th:value="${freeTime[1]}" th:name="maxHour">
+                <input th:type="hidden" th:value="${sendDTO.orderId()}" th:name="orderId">
+                <input type="number" th:name="hour"  th:id="hour"/>
+                <input type="submit" th:value="Зарезервировать">
+            </form>
+        </td>
+    </tr>
+</table>
+<a th:text="${sendDTO.employee()}"></a>
+</body>
+</html>

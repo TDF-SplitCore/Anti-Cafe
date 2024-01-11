@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Редактировать сотрудника</title>
+</head>
+<body>
+<form th:method="GET" th:action="@{/}">
+  <button type="submit">Главная страница</button>
+</form>
+<form th:method="POST" th:action="@{/employee/edit/{id}(id=${sendDTO.employeeId()})}">
+  <table>
+    <tr>
+      <td>
+        <label for="nameNew">ФИО</label>
+      </td>
+      <td>
+        <div th:if="${sendDTO.nameError().isPresent()}">
+          <a th:text="${sendDTO.nameError().get()}" style="color:#FF0000"></a>
+        </div>
+        <input type="text" name="name" id="nameNew" th:placeholder="${sendDTO.employeeName()}" th:value="${sendDTO.employeeName()}"><br/>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label for="usernameNew">Логин</label>
+      </td>
+      <td>
+        <div th:if="${sendDTO.usernameError().isPresent()}">
+          <a th:text="${sendDTO.usernameError().get()}" style="color:#FF0000"></a>
+        </div>
+        <input type="text" name="username" id="usernameNew" th:placeholder="${sendDTO.username()}" th:value="${sendDTO.username()}"><br/>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label for="passwordNew">Новый пароль</label>
+      </td>
+      <td>
+        <div th:if="${sendDTO.nameError().isPresent()}">
+          <a th:text="${sendDTO.nameError().get()}" style="color:#FF0000"></a>
+        </div>
+        <input type="password" name="password" id="passwordNew" th:placeholder="'********'" ><br/>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label for="roleNew">Роль</label>
+      </td>
+      <td>
+        <label>
+          <select th:name="roleId" id="roleNew" >
+            <option th:each="role:${sendDTO.roles()}" th:value="${role.getId()}" th:text="${role.getRole()}"  th:selected="${role.getId() == sendDTO.roleId()}"></option>
+          </select>
+        </label>
+      </td>
+    </tr>
+  </table>
+  <input type="submit" value="Изменить">
+</form>
+<a th:text="${sendDTO.name()}"></a>
+</body>
+</html>

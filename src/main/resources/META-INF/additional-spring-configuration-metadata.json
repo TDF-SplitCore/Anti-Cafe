@@ -1,0 +1,29 @@
+{
+  "properties": [
+    {
+      "name": "reserve.service.daysToReserve",
+      "type": "java.lang.String",
+      "description": "Указывает количество дней для резерва от 1 до 30 reserve.service.daysToReserve."
+    },
+    {
+      "name": "reserve.service.openingHour",
+      "type": "java.lang.String",
+      "description": "Указывает время для открытия от 0 до 23 reserve.service.daysToReserve."
+    },
+    {
+      "name": "reserve.service.closingHour",
+      "type": "java.lang.String",
+      "description": "Указывает время закрытия от 1 до 24 reserve.service.daysToReserve."
+    },
+    {
+      "name": "scheduler.order.lifetime.tagged-deletion",
+      "type": "java.lang.String",
+      "description": "Указывает от 1 до 30 сколько проживет заказ после пометки на удаление."
+    },
+    {
+      "name": "page.page",
+      "type": "java.lang.String",
+      "description": "Количество элементов на странице от 1 до 50."
+    }
+  ]
+}
